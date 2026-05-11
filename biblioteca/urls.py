@@ -16,11 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.authtoken.views import obtain_auth_token
 from biblioteca_app.views.emprestimos import EmprestimoListCreateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('biblioteca_app.urls'))
+    path('api/', include('biblioteca_app.urls')),
+
+    #Criando endpoint
+    path('api-token-auth/', obtain_auth_token),
 
 
 ]

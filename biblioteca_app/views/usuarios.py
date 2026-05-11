@@ -7,4 +7,4 @@ class UsuarioListCreateView(ListCreateAPIView):
 
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
-    permission_class = IsAuthenticated
+    permission_class = [IsAuthenticated]

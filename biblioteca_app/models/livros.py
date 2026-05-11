@@ -1,7 +1,10 @@
 from django.db import models
 from .base import BaseModel
+from biblioteca_app.managers.livro_manager import LivroManager
 
 class Livro(BaseModel):
+    objects = LivroManager()
+
     titulo = models.CharField(
         verbose_name = "Livro",
         help_text = "Nome do livro",

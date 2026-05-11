@@ -3,8 +3,12 @@ from .base import BaseModel
 from .livros import Livro
 from .usuarios import Usuario
 from django.core.exceptions import ValidationError
+from biblioteca_app.managers.emprestimo_manager import EmprestimoManager
 
 class Emprestimo(BaseModel):
+    objects = EmprestimoManager()
+
+
     usuario = models.ForeignKey(
         Usuario,
         on_delete = models.CASCADE
