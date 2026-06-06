@@ -3,6 +3,9 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.generics import ListAPIView
 from biblioteca_app.models.emprestimos import Emprestimo
 from biblioteca_app.serializers.emprestimos import EmprestimoSerializer
+from datetime import datetime
+
+
 
 class EmprestimoListCreateView(ListCreateAPIView):
 
@@ -19,9 +22,11 @@ class EmprestimoAtivoView(ListAPIView):
 
 class EmprestimoAtrasadoView(ListAPIView):
 
-    queryset = Emprestimo.objects.atrasados()
     serializer_class = EmprestimoSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Emprestimo.objects.atrasados()
 
 class HistoricoUsuarioView(ListAPIView):
 
@@ -34,4 +39,19 @@ class HistoricoUsuarioView(ListAPIView):
 
         return Emprestimo.objects.filter(
             usuario_id = usuario_id
+        )
+
+class EmprestimosPorPeriodoView(ListAPIView):
+
+    serializer_class = EmprestimoSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        """Acessar emprestimos a partir da data x"""
+
+        inicio = self.request.GET.get("inicio")
+        fim = self.request.GET.get("fim")
+
+        return Emprestimo.objects.filter(
+            data_emprestimo__range = [inicio, fim]
         )
